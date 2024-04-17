@@ -17,23 +17,21 @@ info.pop()
 info.pop()
 
 solCount = info[1][info[1].find(":") + 3 : len(info[1])-1]
-
-def getSol() :
-    print(f'Current Sol: {solCount}')
-
-getSol()
-
 terrestrial_date = info[0][info[0].find(":") + 3 : len(info[0])-1]
-def getTerrestrial() :
-    print(f'Current Terrestrial Date: {terrestrial_date}')
-getTerrestrial()
-
 minTemp = info[4][info[4].find(":") + 3: len(info[4])-1] 
 maxTemp = info[5][info[5].find(":") + 3: len(info[5])-1] 
 
+def getSol() :
+    print(f'Current Sol: {solCount}')
+def getTerrestrial() :
+    print(f'Current Terrestrial Date: {terrestrial_date}')
 def getMin():
     print(f'Min Temp: {minTemp}')
 def getMax():
     print(f'Max Temp: {maxTemp}')
+
+
+getSol()
+getTerrestrial()
 getMin()
 getMax()
