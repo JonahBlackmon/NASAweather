@@ -1,16 +1,39 @@
 import requests
+import json
 
-APIKey = 'KqbBKhQ9jjeF2NygFIdr2nWzKSZDYzUYUzWhgrbe'
-API = f'https://mars.nasa.gov/rss/api/?feed=weather&category=insight_temperature&feedtype=json&ver=1.0'
+API = 'https://mars.nasa.gov/rss/api/?feed=weather&category=msl&feedtype=json'
 response = requests.get(API)
 data = response.json()
 print(response.status_code)
-sol = data['sol_keys']
-#print(response.json())
-def latestSols(): 
-    for i in range(7) :
-        print(f'Current Sol: {sol[i]}')
-        print(f'Average Temperature: {data[sol[i]]['AT']['av']}')
-        print(f'Horizontal Wind Speed: {data[sol[i]]['HWS']['av']}')
 
-latestSols()
+text = str(data)
+firstEntry = text.find("\'terrestrial_date\'")
+temp = text[firstEntry+10:]
+secondEntry = firstEntry + 10 + temp.find("\'terrestrial_date\'")
+
+info = text[firstEntry:secondEntry]
+info = info.split(",")
+info.pop()
+info.pop()
+
+solCount = info[1][info[1].find(":") + 3 : len(info[1])-1]
+
+def getSol() :
+    print(f'Current Sol: {solCount}')
+
+getSol()
+
+terrestrial_date = info[0][info[0].find(":") + 3 : len(info[0])-1]
+def getTerrestrial() :
+    print(f'Current Terrestrial Date: {terrestrial_date}')
+getTerrestrial()
+
+minTemp = info[4][info[4].find(":") + 3: len(info[4])-1] 
+maxTemp = info[5][info[5].find(":") + 3: len(info[5])-1] 
+
+def getMin():
+    print(f'Min Temp: {minTemp}')
+def getMax():
+    print(f'Max Temp: {maxTemp}')
+getMin()
+getMax()
